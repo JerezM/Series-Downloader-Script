@@ -68,10 +68,10 @@ def is_valid(mediafireURL):
     linkParts = mediafireURL.split("/")
     if (linkParts[4] == "null"):
         isValid = False
-        
+
     return isValid
 
-def funcname(firstEpisode, lastEpisode, url):
+def download_episodes(firstEpisode, lastEpisode, url):
     episodeNumber = firstEpisode
 
     while (episodeNumber <= lastEpisode) :
@@ -87,23 +87,33 @@ def funcname(firstEpisode, lastEpisode, url):
 
 if __name__ == "__main__":
     animeURL = input("Insert URL: ")
-    chapters = get_number_chapters("animeURL")
+    chapters = get_number_chapters(animeURL)
     numChapters = extract_number_from_string(chapters)
     print ("This anime has "+str(numChapters)+" episodes available.")
-    optionSelectec = input ("Which option do you prefer?\n[1]: Download one episode.\n[2]: Select the range of episodes to download.\n[3]: Download all the episodes.")
+    optionSelectec = input ("Which option do you prefer?\n[1]: Download one episode.\n[2]: Select the range of episodes to download.\n[3]: Download all the episodes.\nOption selected: ")
     optionSelectec = int(optionSelectec)
     
-    if (optionSelectec == 1) :
-        #episodeA = episodeASelected
-        #episodeB = episodeBSelected
-        print()
-    if (optionSelectec == 2) :
-        #episodeA = episodeASelected
-        #episodeB = episodeBSelected
-        print()
-    if (optionSelectec == 3) :
-        #episodeA = episodeASelected
-        #episodeB = episodeBSelected
-        print()
-    else :
+    print("Remember that the episodes availables are: "+str(1)+" - "+str(numChapters))
+    if (optionSelectec == 1):
+        episodeA = input("Which episode do you want to download: ")
+        episodeA = int(episodeA)
+        episodeB = episodeA
+        print("One episode will be downloaded")
+
+    if (optionSelectec == 2):
+        print("Select the first and the last episode that do you want to download")
+        episodeA = input("Select the first episode: ")
+        episodeA = int(episodeA)
+        episodeB = input("Select the last episode: ")
+        episodeB = int(episodeB)
+        print("The episodes from the "+str(episodeA)+" to the "+str(episodeB)+" will be downloaded")
+
+    if (optionSelectec == 3):
+        episodeA = 1
+        episodeB = numChapters
+        print("All the episodes from the serie will be downloaded")
+    
+    if (optionSelectec != 1 | optionSelectec != 2 |optionSelectec != 3):
         print("Invalid option, please try again.")
+
+    download_episodes(episodeA, episodeB, animeURL)
