@@ -39,27 +39,43 @@ def extract_mp4_mediafire_url(url):
     downloadLink = a['href']
     return downloadLink
 
+def get_mediafire_url(url):
+    r = requests.get(url)
+    soup = BeautifulSoup(r.text, 'lxml')
+    div = soup.find(id="basic-modal-content")
+    a = div.findAll('a')
+    for name in a:
+        href = name['href'].split("/")
+        endString = href[-1]
+        if (endString == "file"):
+            mediafireURL = str(name['href'])
+    return mediafireURL
+
 #Get the name of the mp4 file for future use
 def get_episode_name_from_string(urlString):
     names = urlString.split("/")
     name = names[-1]
     return name
 
-#URL = input("Insert URL: ")
-#chapters = get_number_chapters("https://jkanime.net/yahari-ore-no-seishun-love-comedy-wa-machigatteiru-kan/")
-#numChapters = extract_number_from_string(chapters)
-#print ("This anime has "+str(numChapters)+" episodes available.")
-#optionSelectec = input ("Which option do you prefer?\n[1]: Download one episode.\n[2]: Select the range of episodes to download.\n[3]: Download all the episodes.")
-#optionSelectec = int(optionSelectec)
+def one_episode():
+    return "option 1"
 
-mediafireURL = "http://www.mediafire.com/file/jzvatwj4039ixai/yahorr-12.mp4/file"
+def range_of_episodes():
+    return "option 2"
+
+def all_episodes():
+    return "option 3"
+
+animeURL = input("Insert URL: ")
+chapters = get_number_chapters("animeURL")
+numChapters = extract_number_from_string(chapters)
+print ("This anime has "+str(numChapters)+" episodes available.")
+optionSelectec = input ("Which option do you prefer?\n[1]: Download one episode.\n[2]: Select the range of episodes to download.\n[3]: Download all the episodes.")
+optionSelectec = int(optionSelectec)
+
+
+episodeURL = "https://jkanime.net/yahari-ore-no-seishun-love-comedy-wa-machigatteiru-kan/2/"
+mediafireURL = get_mediafire_url(episodeURL)
 mp4URL = extract_mp4_mediafire_url(mediafireURL)
-print (mp4URL)
 mp4Name = get_episode_name_from_string(mp4URL)
-print (mp4Name)
-
-
-
-
-
-
+download_file(mp4Name, mp4URL)
