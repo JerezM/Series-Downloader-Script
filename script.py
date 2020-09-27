@@ -24,7 +24,7 @@ def get_number_chapters(url):
     return chaps[0]
 
 #Parse the string to return the amount of episode in a int type
-def extract_number(chapString):
+def extract_number_from_string(chapString):
     numbers = []
     for word in chapString.split():
         if (word.isdigit()):
@@ -32,17 +32,27 @@ def extract_number(chapString):
     return numbers[-1]
 
 #Extract the url used to download the episode from the page mediafire
-def extract_mp4_mediafire(url):
+def extract_mp4_mediafire_url(url):
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'lxml')
+    a = soup.find('a', class_="input popsok")
+    downloadLink = a['href']
+    return downloadLink
 
+#Get the name of the mp4 file for future use
+def get_episode_name_from_string(urlString):
+    
 
 #URL = input("Insert URL: ")
 #chapters = get_number_chapters("https://jkanime.net/yahari-ore-no-seishun-love-comedy-wa-machigatteiru-kan/")
-#numChapters = extract_number(chapters)
+#numChapters = extract_number_from_string(chapters)
 #print ("This anime has "+str(numChapters)+" episodes available.")
 #optionSelectec = input ("Which option do you prefer?\n[1]: Download one episode.\n[2]: Select the range of episodes to download.\n[3]: Download all the episodes.")
 #optionSelectec = int(optionSelectec)
+mediafireURL = "http://www.mediafire.com/file/jzvatwj4039ixai/yahorr-12.mp4/file"
+mp4URL = extract_mp4_mediafire_url(mediafireURL)
+print (mp4URL)
+
 
 
 
