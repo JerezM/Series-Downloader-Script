@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 #Download the file mp4 from the url with the name('episode-name.mp4') and url indicates
 def download_file(name, url, episodeNumber):
     r = requests.get(url)
-    print ("****Connected****")
     f = open(name, 'wb')
     print ("Downloading episode "+str(episodeNumber)+"...")
     for chunk in r.iter_content(chunk_size = 255): 
@@ -37,7 +36,10 @@ def extract_mp4_mediafire_url(url):
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'lxml')
     a = soup.find('a', class_="input popsok")
-    downloadLink = a['href']
+    if (a != None):
+        downloadLink = a['href']
+    else:
+        downloadLink = None
 
     return downloadLink
 
@@ -81,14 +83,17 @@ def download_episodes(firstEpisode, lastEpisode, url):
         mediafireURL = get_mediafire_url(actualEpisodeURL)
         if ( is_valid(mediafireURL) ):
             mp4URL = extract_mp4_mediafire_url(mediafireURL)
-            mp4Name = get_episode_name_from_string(mp4URL)
-            download_file(mp4Name, mp4URL, episodeNumber)
+            if(mp4URL != None):
+                mp4Name = get_episode_name_from_string(mp4URL)
+                download_file(mp4Name, mp4URL, episodeNumber)
+            else:
+                print("The link to mediafire of the episode "+str(episodeNumber)+" is broken.")
         else:
             print("The link to mediafire of the episode "+str(episodeNumber)+" is broken.")
         episodeNumber += 1
 
 if __name__ == "__main__":
-    animeURL = input("Insert URL: ")
+    animeURL = input("Insert URL: ")#https://jkanime.net/yahari-ore-no-seishun-love-comedy-wa-machigatteiru-kan/
     chapters = get_number_chapters(animeURL)
     numChapters = extract_number_from_string(chapters)
     print ("This anime has "+str(numChapters)+" episodes available.")
