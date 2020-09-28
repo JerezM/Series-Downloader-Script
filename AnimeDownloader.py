@@ -93,12 +93,14 @@ def download_episodes(firstEpisode, lastEpisode, url):
         episodeNumber += 1
 
 if __name__ == "__main__":
-    animeURL = input("Insert URL: ")
+    print("Welcome to the anime downloader, for the moment this version is only available for jkanime.net")
+    animeURL = input("Please insert the URL: ")
     chapters = get_number_chapters(animeURL)
     numChapters = extract_number_from_string(chapters)
     print ("This anime has "+str(numChapters)+" episodes available.")
     optionSelectec = input ("Which option do you prefer?\n[1]: Download one episode.\n[2]: Select the range of episodes to download.\n[3]: Download all the episodes.\nOption selected: ")
     optionSelectec = int(optionSelectec)
+    episodeA = 0
     
     print("Remember that the episodes availables are: "+str(1)+" - "+str(numChapters))
     if (optionSelectec == 1):
@@ -120,7 +122,7 @@ if __name__ == "__main__":
         episodeB = numChapters
         print("All the episodes from the serie will be downloaded")
     
-    if (optionSelectec != 1 | optionSelectec != 2 |optionSelectec != 3):
+    if (episodeA == 0):
         print("Invalid option, please try again.")
 
     download_episodes(episodeA, episodeB, animeURL)
