@@ -93,7 +93,7 @@ def download_episodes(firstEpisode, lastEpisode, url):
         episodeNumber += 1
 
 if __name__ == "__main__":
-    animeURL = input("Insert URL: ")#https://jkanime.net/yahari-ore-no-seishun-love-comedy-wa-machigatteiru-kan/
+    animeURL = input("Insert URL: ")
     chapters = get_number_chapters(animeURL)
     numChapters = extract_number_from_string(chapters)
     print ("This anime has "+str(numChapters)+" episodes available.")
