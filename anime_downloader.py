@@ -39,7 +39,7 @@ def extract_mp4_mediafire_url(url):
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'lxml')
     a = soup.find('a', class_="input popsok")
-    if (a != None):
+    if (a is not  None):
         download_link = a['href']
     else:
         download_link = None
@@ -92,7 +92,7 @@ def download_episodes(first_episode, last_episode, url):
         mediafire_url = get_mediafire_url(actual_episode_url)
         if ( is_valid(mediafire_url) ):
             mp4_url = extract_mp4_mediafire_url(mediafire_url)
-            if(mp4_url != None):
+            if(mp4_url is not  None):
                 mp4_name = get_episode_name_from_string(mp4_url)
                 download_file(mp4_name, mp4_url, episode_number)
             else:
