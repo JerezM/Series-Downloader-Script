@@ -1,8 +1,8 @@
 import requests
 from bs4 import BeautifulSoup
 
-#Download the file mp4 from the url with the name('episode-name.mp4') and url indicates
 def download_file(name, url, episode_number):
+    """Download the file mp4 from the url with the name('episode-name.mp4') and url indicates"""
     r = requests.get(url)
     f = open(name, 'wb')
     print ("Downloading episode "+str(episode_number)+"...")
@@ -13,8 +13,8 @@ def download_file(name, url, episode_number):
     f.close()
 
 
-#Get a string with the numbers of episodes that the anime actually has
 def get_number_episodes(url):
+    """Get a string with the numbers of episodes that the anime actually has"""
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'lxml')
     numbers = soup.find_all('a', class_="numbers")
@@ -24,8 +24,8 @@ def get_number_episodes(url):
     return chaps[0]
 
 
-#Parse the string to return the amount of episode in a int type
 def extract_number_from_string(episode_string):
+    """Parse the string to return the amount of episode in a int type"""
     numbers = []
     for word in episode_string.split():
         if (word.isdigit()):
@@ -34,8 +34,8 @@ def extract_number_from_string(episode_string):
     return numbers[-1]
 
 
-#Extract the url used to download the episode from the page mediafire
 def extract_mp4_mediafire_url(url):
+    """Extract the url used to download the episode from the page mediafire"""
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'lxml')
     a = soup.find('a', class_="input popsok")
@@ -47,8 +47,8 @@ def extract_mp4_mediafire_url(url):
     return download_link
 
 
-#Extract the url of mediafire in jkanime
 def get_mediafire_url(url):
+    """Extract the url of mediafire in jkanime"""
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'lxml')
     div = soup.find(id="basic-modal-content")
@@ -62,17 +62,19 @@ def get_mediafire_url(url):
     return mediafire_url
 
 
-#Get the name of the mp4 file for future use
 def get_episode_name_from_string(url_string):
+    """Get the name of the mp4 file for future use"""
     names = url_string.split("/")
     name = names[-1]
 
     return name
 
 
-#Check is the link to mediafire is no broken
-#Example of a broken link: 'https://www.mediafire.com/file/null/oretresf-01.mp4/file'
 def is_valid(mediafire_url):
+    """
+    Check is the link to mediafire is no broken
+    Example of a broken link: 'https://www.mediafire.com/file/null/oretresf-01.mp4/file'
+    """
     valid = True
     link_parts = mediafire_url.split("/")
     if (link_parts[4] == "null"):
@@ -81,8 +83,8 @@ def is_valid(mediafire_url):
     return valid
 
 
-#Download all the episodes between the first_episode and the last_episode, them included.
 def download_episodes(first_episode, last_episode, url):
+    """Download all the episodes between the first_episode and the last_episode, them included."""
     episode_number = first_episode
 
     while (episode_number <= last_episode) :
