@@ -41,6 +41,7 @@ def extract_mp4_mediafire_url(url):
 
     return downloadLink
 
+#Extract the url of mediafire in jkanime
 def get_mediafire_url(url):
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'lxml')
@@ -71,6 +72,7 @@ def is_valid(mediafireURL):
 
     return isValid
 
+#Download all the episodes between the firstEpisode and the lastEpisode, them included.
 def download_episodes(firstEpisode, lastEpisode, url):
     episodeNumber = firstEpisode
 
