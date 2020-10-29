@@ -43,6 +43,6 @@ You can choose which one you like, on this case we will use the second one. Afte
 Select the first episode: 
 Select the last episode:
 ```
-At the end of this, the downloads will start and whole be stored at the same folder of the script.
+At the end of this, the downloads will start and all the episodes will be stored at the same folder of the script.
 Example:
 ![DL Process](https://linkpicture.com/q/DL_process.jpeg)
